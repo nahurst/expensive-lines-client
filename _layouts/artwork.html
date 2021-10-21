@@ -1,0 +1,60 @@
+---
+layout: default
+---
+{{ content }}
+<div class="space-y-2">
+  <h2 class="text-xl">{{ page.artworkTitle }}</h2>
+  <div class="space-y-6">
+    <section id="main" class="md:grid md:grid-cols-2 md:gap-8 space-y-4">
+      <div class="w-full inline-block border-2 border-gray-500 md:justify-start bg-white">
+        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 255 255"></svg>
+      </div>
+    
+      <div id="status" class="overflow-x-auto overflow-y-hidden h-full space-y-2">
+        <h2 class="text-xl">Details</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Name</div>
+          <div id="artworkId" class="md:col-span-2"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Material Cost</div>
+          <div id="cost" class="md:col-span-2 w-64"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Status</div>
+          <div id="state" class="md:col-span-2"></div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Line Count</div>
+          <div id="lineCount" class="md:col-span-2"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Lines by Lead</div>
+          <div id="linesByLeader" class="md:col-span-2"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Lead Artist</div>
+          <div id="leadArtist" class="md:col-span-2"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>Grantee</div>
+          <div id="grantee" class="md:col-span-2"></div>
+        </div>
+        
+      </div>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-xl invisible" id="nextArtworksHeading">More Art</h2>
+      <div id="nextArtworks" class="grid grid-cols-2 gap-4 md:grid-cols-6">
+      </div>
+    </section>
+  </div>
+  <p><a id="prev" class="invisible" href="/artwork?id=1">Previous</a></p>
+</div>
+
+<script type="module">
+  import main from '/assets/js/main.js'
+  main()
+</script>

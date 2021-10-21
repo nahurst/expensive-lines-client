@@ -1,0 +1,124 @@
+---
+layout: default
+title: How it Works | Expensive Lines
+permalink: /about/
+---
+
+<section class="space-y-4 md:w-2/3">
+  <div class="space-y-4">
+    <p>Each artwork is created with svg lines by calling <span class="code">draw(artworkId, x1, y1, x2, y2, colorR, colorG, colorB)</span>.</p>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-2">
+        <p>Calling:</p>
+        <p class="code">draw(artworkId, 5,125, 130,250, 16,185,129)</p>
+        <p class="code">draw(artworkId, 5,5,   250,250, 147,197,253)</p>
+        <p class="code">draw(artworkId, 130,5, 250,125, 59,130,246)</p>
+      </div>
+      <div class="space-y-2 md:w-1/2">
+        <p>Would produce:</p>
+        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 255 255">
+          <line x1="5" y1="125" x2="130" y2="250" stroke="rgb(16,185,129)" stroke-width="10"/>
+          <line x1="5" y1="5" x2="250" y2="250" stroke="rgb(147,197,253)" stroke-width="10"/>
+          <line x1="130" y1="5" x2="250" y2="125" stroke="rgb(59,130,246)" stroke-width="10"/>
+        </svg>
+      </div>
+    </div>
+    
+    <p>
+      artworkId may be [0-3999]. All other values must be [0-255]. 
+      x and y coordinates use svg the viewbox so higher y is farther down; 
+      higher x is farther right. Lines are drawn with an svg stroke-width=10.
+    </p>
+    <p>You can <a href="/practice">practice drawing here</a>.</p>
+    <p>After 50 lines are drawn within an artwork (by you or anyone else), whoever drew the most lines may <span class="code">grant()</span> the NFT to themselves.</p>
+    <p>There is a 4,000 artwork cap. All are drawn in parallel.</p>
+    <p>Call <span class="code">tokenURI(tokenId)</span> to retrieve the NFT's svg. Clients, such as this one, are non-authoritative. All data lives on the blockchain.</p>
+    <p>The material costs of an artwork include all transaction fees (or optional ether) spent when calling <span class="code">draw()</span>.</p>
+    <p>Do material costs influence anything? I don't know. That's part of the experiment here. Nothing in the contract is influenced by material costs though.</p>
+    <p>
+      A reminder: this is an unaudited contract. Use at your own risk. 
+      To participate, you will need to know how Ethereum works,
+      how to run functions on a contract, and how to svg works.
+
+      If you don't know these things, you can definitely learn.
+      But I'd advise against using this until you do.
+    </p>
+  </div>
+</section>
+
+<section class="space-y-4 md:w-2/3">
+  <h2 class="text-2xl">FAQ</h2>
+
+  {% include qa.html 
+    q='Why did you make this?'
+    a='<a href="https://twitter.com/nahurst">I</a> wanted to experiment with a new pattern for building things together. For example, with a similar approach,
+    you could apply collective human ingenuity in place of many of the AI or randomly generated NFT projects we\'ve seen so far. I\'m also hoping to learn
+    some things about "material costs" for digital art along the way. There are also a bunch of ways that desctruction could take over this experiment, and I want to see how
+    creative projects fight those kinds of things. I\'m interested in expanding on these concepts outside of art eventually.' %}
+  
+  {% include qa.html
+    q='How did you get the idea for this?'
+    a='At restaurants with my kids, when we\'re waiting for our food, sometimes they give us crayons. We draw things together like this. Also I really loved <a href="https://www.reddit.com/r/place">r/place</a> and <a href="https://www.lootproject.com/">Loot</a>.' %}
+
+  {% include qa.html
+    q='These lines aren\'t expensive enough. Can I make them more expensive?'
+    a='Yes, you may send ether along with your calls to <span class="code">draw()</span>. It increases the material cost that clients may read. However, it has no influence over the workings of the contract. I plan to use the proceeds for future web3 projects.' %}
+
+  {% include qa.html
+    q='Why can\'t I draw dots or other shapes?'
+    a='Dots get too expensive. I know these are expensive lines, but things get out of hand with dots and gas. Other shapes give too much power to an individual. Ex: you wipe out an entire artwork with one big square.'  %}
+
+  {% include qa.html
+    q='Will you launch this on another chain?'
+    a='Probably not. The lines probably wouldn\'t be as expensive if I did. I\'d love to hear about how it goes if you do.'  %}
+
+  {% include qa.html
+    q='How do I read the image of an artwork?'
+    a='Call <span class="code">tokenURI(tokenId)</span> decode: <pre id="nftExample" class="overflow-x-auto overflow-y-hidden"></pre>' %}
+  
+  {% include qa.html
+    q='Can I add a background color?'
+    a='The svg is transparent, but you can add a background with individual lines. It\'ll take 26 to fill up the canvas. I experimented with adding a random background color based on the block hash, but in testing, it ended up looking bad more often than not.' %}
+  
+  {% include qa.html
+    q='Should I trust this client?'
+    a='Sort of. It\'s the first client, but it\'s not authoritative and I\'ll post others here as I learn of them. The authority on the state and contents of all NFTs is the contract.' %}
+  
+  {% include qa.html
+    q='What if I run in to rate limits on my client?'
+    a='Say hi in discord and and try running the client locally.' %}
+  
+  {% include qa.html
+    q='Why not fractional ownership for NFTs?'
+    a='I\'m really interested in exploring it, but it seems dramatically more complicated and the systems around it are less mature. If you know a lot about this, I\'d love to chat.' %}
+  
+  {% include qa.html
+    q='Why aren\'t the material costs embedded in the NFT?'
+    a='Transaction costs are not finalized until after a transaction completes, so the contract cannot read them. Also reading historical data from the blockchain from a contract is difficult.' %}
+  
+  {% include qa.html
+    q='How can I test what my line will look like before I send it?'
+    a='Create a file, `test.svg` with:
+      <pre id="svgExample" class="code overflow-x-auto"></pre>
+      And open it in your browser. Pay particular attention to your y coordinates.' %}
+
+  {% include qa.html
+    q='How do I see how many lines I\'ve drawn in an artwork?'
+    a='You may use the convenience function, <span class="code">linesBy(artworkId, address)</span>.' %}
+
+  {% include qa.html
+    q='Where\'s the roadmap?'
+    a='There isn\'t one. This is a one-time experiment.' %}
+</section>
+
+<script type="module">
+  document.querySelector('#svgExample').textContent =
+    '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 255 255">\n' +
+    '  <line x1="0" y1="0" x2="255" y2="255" stroke="rgb(0,99,0)" stroke-width="10"/>\n' +
+    '</svg>';
+  document.querySelector('#nftExample').textContent = 
+    "const tokenURI = await contract.tokenURI(tokenId);\n" +
+    "const tokenURIJson = JSON.parse(atob(tokenURI.substr('data:application/json;base64,'.length)));\n" +
+    "const tokenSvg = atob(tokenURIJson.image.substr('data:image/svg+xml;base64,'.length));";
+</script>
